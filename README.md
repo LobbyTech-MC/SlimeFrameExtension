@@ -2,8 +2,8 @@ I made this for a server just for fun
 
 Not completed, need SlimeFrame, supports 1.16.5(and above? maybe), NOT FULLY TESTED
 - if u want to translate, find /main/resources/language, create one like"en_US.properties", copy and change words from 'zh_CN.properties',<font color=yellow>then tweak config and DO compile</font>
-<font color=red>
-- Alert for using source code: used tweaked SlimeFun from <a hre=https://github.com/StarWishsama/Slimefun4> HERE</a>
+
+- <font color=red>Alert for using source code: used tweaked SlimeFun from <a hre=https://github.com/StarWishsama/Slimefun4> HERE</a>
   </font>
 (Maybe U can try your own slimefun, i didn't remember i used anything they tweaked )
 
