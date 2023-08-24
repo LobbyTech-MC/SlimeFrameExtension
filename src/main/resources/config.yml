@@ -1,0 +1,14 @@
+
+# no use for this
+auto-update: false
+  
+language: zh_CN
+
+commands:
+  slimeframeextension:
+    - 'slimeframeextension'
+    - 'sfe'
+  addendos:
+    - 'addendos'
+  endos:
+    - 'endos'

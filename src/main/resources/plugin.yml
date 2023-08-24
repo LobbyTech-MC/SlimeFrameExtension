@@ -1,0 +1,24 @@
+name: SlimeFrameExtension
+author: acdeasdff
+description: Extension 4 SlimeFrame
+main: io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension
+website: 127.0.0.1
+depend: [Slimefun, SlimeFrame]
+softdepend: [PlaceholderAPI, ProtocolLib]
+version: ${project.version}
+api-version: 1.16
+permissions:
+  slimeframeextension.anyone.endos:
+    description: Can see endos for a player
+  slimeframeextension.admin.addendos:
+    description: Can add endos for a player
+  slimeframeextension.admin.*:
+    description: Permissions for admins
+    default: op
+    children:
+      slimeframeextension.admin.addendos: true
+  slimeframeextension.anyone.*:
+    description: Permissions for anyone
+    default: not op
+    children:
+      slimeframeextension.anyone.endos: true
