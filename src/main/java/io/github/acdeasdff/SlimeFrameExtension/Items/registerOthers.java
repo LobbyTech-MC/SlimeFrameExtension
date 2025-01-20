@@ -3,11 +3,10 @@ package io.github.acdeasdff.SlimeFrameExtension.Items;
 import io.github.acdeasdff.SlimeFrameExtension.Groups.Group;
 import io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.items.blocks.UnplaceableBlock;
-import me.voper.slimeframe.slimefun.groups.Groups;
-import me.voper.slimeframe.slimefun.items.multiblocks.Foundry;
-import me.voper.slimeframe.slimefun.items.resources.MobDropItem;
+import me.voper.slimeframe.implementation.groups.Groups;
+import me.voper.slimeframe.implementation.items.multiblocks.Foundry;
+import me.voper.slimeframe.implementation.items.resources.MobDropItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -16,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Map;
 
 import static io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension.properties;
-import static me.voper.slimeframe.slimefun.SFrameStacks.*;
+import static me.voper.slimeframe.implementation.SFrameStacks.*;
 
 public class registerOthers {
     public static SlimefunItemStack BLUE_POTATO = new SlimefunItemStack(
@@ -36,7 +35,7 @@ public class registerOthers {
     public static SlimefunItemStack FORMA = new SlimefunItemStack(
             "SFE_FORMA",
             Material.GOLD_INGOT,
-            ChatColor.YELLOW +properties.getReplacedProperty("Others_Forma"),
+            ChatColor.YELLOW + properties.getReplacedProperty("Others_Forma"),
             properties.getReplacedProperty("Others_Forma_Lore")
     );
 
@@ -46,23 +45,24 @@ public class registerOthers {
             ChatColor.GOLD + properties.getReplacedProperty("Material_Oxium"),
             ChatColor.GRAY + properties.getReplacedProperty("Material_Oxium_Lore")
     );
-    public static void setup(SlimeFrameExtension plugin){
+
+    public static void setup(SlimeFrameExtension plugin) {
         new UnplaceableBlock(Group.MATERIALS, BLUE_POTATO, Foundry.RECIPE_TYPE, new ItemStack[]{
-                OROKIN_CELL,                 MORPHICS,                      CONTROL_MODULE,
-                GALLIUM,                     new ItemStack(Material.AIR), new ItemStack(Material.AIR),
+                OROKIN_CELL, MORPHICS, CONTROL_MODULE,
+                GALLIUM, new ItemStack(Material.AIR), new ItemStack(Material.AIR),
                 new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)
         }).register(plugin);
 
         new UnplaceableBlock(Group.MATERIALS, GOLDEN_POTATO, Foundry.RECIPE_TYPE, new ItemStack[]{
-                OROKIN_CELL,                    NEURODES,               NEURAL_SENSORS,
-                MORPHICS,                   new ItemStack(Material.AIR), new ItemStack(Material.AIR),
+                OROKIN_CELL, NEURODES, NEURAL_SENSORS,
+                MORPHICS, new ItemStack(Material.AIR), new ItemStack(Material.AIR),
                 new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)
         }).register(plugin);
 
         new UnplaceableBlock(Group.MATERIALS, FORMA, Foundry.RECIPE_TYPE, new ItemStack[]{
-                new ItemStack(Material.AIR),    NEURODES,                   NEURAL_SENSORS,
-                         MORPHICS,              OROKIN_CELL,                new ItemStack(Material.AIR),
-                new ItemStack(Material.AIR), new ItemStack(Material.AIR),   new ItemStack(Material.AIR)
+                new ItemStack(Material.AIR), NEURODES, NEURAL_SENSORS,
+                MORPHICS, OROKIN_CELL, new ItemStack(Material.AIR),
+                new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR)
         }).register(plugin);
         new MobDropItem(Groups.RESOURCES, OXIUM)
                 .setMobChanceMap(Map.of(

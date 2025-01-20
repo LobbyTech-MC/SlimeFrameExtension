@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-public class AbstractWeapons extends AbstractModifiableItem{
+public class AbstractWeapons extends AbstractModifiableItem {
     public AbstractWeapons(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         ItemMeta itemMeta = item.getItemMeta();

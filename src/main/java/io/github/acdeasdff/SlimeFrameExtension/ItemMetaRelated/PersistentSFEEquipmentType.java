@@ -18,7 +18,7 @@ public class PersistentSFEEquipmentType implements PersistentDataType<Persistent
 
     public static final NamespacedKey MODIFIER = Keys.newKey("sfe_modifiers");
     public static final NamespacedKey MODIFIER_META = Keys.newKey("sfe_modifier_meta");
-//    public static final NamespacedKey IS_MODIFIABLE = Keys.newKey("sfe_modifiable");
+    //    public static final NamespacedKey IS_MODIFIABLE = Keys.newKey("sfe_modifiable");
     public static final NamespacedKey ITEM_TYPE = Keys.newKey("sfe_item_type");
     public static final NamespacedKey FORMAED = Keys.newKey("sfe_formaed");
 
@@ -41,11 +41,14 @@ public class PersistentSFEEquipmentType implements PersistentDataType<Persistent
 
         ItemStack[] ModifierMaterials = new ItemStack[complex.getModifierMaterials().length];
         ItemMeta[] ModifierMetas = new ItemMeta[complex.getModifierMetas().length];
-        for (int i=0;i<complex.getModifiers().length;i++){
-            if (complex.getModifierMaterials()[i] != null){
+        for (int i = 0; i < complex.getModifiers().length; i++) {
+            if (complex.getModifierMaterials()[i] != null) {
                 ModifierMaterials[i] = new ItemStack(complex.getModifierMaterials()[i].getType(), complex.getModifierMaterials()[i].getAmount());
                 ModifierMetas[i] = complex.getModifiers()[i].getItemMeta();
-            }else {ModifierMaterials[i] = null;ModifierMetas[i] = null;}
+            } else {
+                ModifierMaterials[i] = null;
+                ModifierMetas[i] = null;
+            }
         }
         container.set(MODIFIER, DataType.ITEM_STACK_ARRAY, ModifierMaterials);
         container.set(MODIFIER_META, DataType.ITEM_META_ARRAY, ModifierMetas);

@@ -1,7 +1,6 @@
 package io.github.acdeasdff.SlimeFrameExtension;
 
 import co.aikar.commands.PaperCommandManager;
-import java.util.Arrays;
 
 import static io.github.acdeasdff.SlimeFrameExtension.SettingsManager.ConfigField.*;
 
@@ -13,7 +12,7 @@ public class CommandManager extends PaperCommandManager {
     public CommandManager(SlimeFrameExtension plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.sm=SlimeFrameExtension.getSettingsManager();
+        this.sm = SlimeFrameExtension.getSettingsManager();
     }
 
     public void setup() {

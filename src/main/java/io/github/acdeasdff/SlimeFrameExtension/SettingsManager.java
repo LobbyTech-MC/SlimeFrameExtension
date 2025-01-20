@@ -39,9 +39,9 @@ public final class SettingsManager {
     }
 
     @AllArgsConstructor
-    public enum ConfigField{
+    public enum ConfigField {
 
-//        AUTO_UPDATE("options.auto-update", true),
+        //        AUTO_UPDATE("options.auto-update", true),
 //        RESEARCHES_ENABLED("options.enable-researches", true),
 //        ENABLE_AE_ITEMS_IN_SOUL_CONTRACTS("options.enable-ae-items-in-soul-contracts", false),
 //        ORE_TRADE_CHANCE("options.ore-trade-chance", 1),

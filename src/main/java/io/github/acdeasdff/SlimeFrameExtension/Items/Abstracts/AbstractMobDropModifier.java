@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.Validate;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import me.voper.slimeframe.slimefun.attributes.AdvancedMobDrop;
+import me.voper.slimeframe.core.attributes.AdvancedMobDrop;
 import me.voper.slimeframe.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,11 +16,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static me.voper.slimeframe.SlimeFrame.languageJSON;
-import static me.voper.slimeframe.slimefun.items.resources.MobDropItem.RECIPE_TYPE;
+import static me.voper.slimeframe.implementation.items.resources.MobDropItem.RECIPE_TYPE;
 
 public class AbstractMobDropModifier extends AbstractModifier implements AdvancedMobDrop, RecipeDisplayItem {
 
@@ -100,17 +104,16 @@ public class AbstractMobDropModifier extends AbstractModifier implements Advance
                             recipes.add(new CustomItemStack(Material.PAPER,
                                     ChatColor.WHITE + "掉落几率: " + ChatColor.AQUA + entry.getValue() + "%"));
                             Material material;
-                            if (entry.getKey().name().equals("WITHER")){
-                                material = Material.WITHER_SKELETON_SPAWN_EGG;}
-                            else if(entry.getKey().name().equals("ENDER_DRAGON")){
+                            if (entry.getKey().name().equals("WITHER")) {
+                                material = Material.WITHER_SKELETON_SPAWN_EGG;
+                            } else if (entry.getKey().name().equals("ENDER_DRAGON")) {
                                 material = Material.ENDERMAN_SPAWN_EGG;
-                            }
-                            else{
+                            } else {
                                 material = Material.getMaterial(entry.getKey().name() + "_SPAWN_EGG");
 //                        SlimeFrame.getInstance().getLogger().log(Level.WARNING, entry.getKey().name());
                             }
                             if (material != null) {
-                                CustomItemStack spawnEgg = new CustomItemStack(material,ChatColor.WHITE +  languageJSON.get(entry.getKey().name().toLowerCase()).getAsString());
+                                CustomItemStack spawnEgg = new CustomItemStack(material, ChatColor.WHITE + entry.getKey().name().toLowerCase());
                                 recipes.add(spawnEgg);
                             }
                         });

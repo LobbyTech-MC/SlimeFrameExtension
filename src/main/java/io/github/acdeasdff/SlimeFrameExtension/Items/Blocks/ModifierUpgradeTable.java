@@ -31,10 +31,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,25 +46,33 @@ import static io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension.proper
 
 public class ModifierUpgradeTable extends SlimefunItem {
 
-    private static Player p;//player placed block
     private static final int[] borders = new int[]{
-            0, 1, 2, 3,   5, 6, 7, 8,
-            9,10,11,12,  14,15,16,17,
-            18,19,20,21,22,23,24,25,26,
+            0, 1, 2, 3, 5, 6, 7, 8,
+            9, 10, 11, 12, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
 
-                    39,   41,42,43,44,
-            45,46,47,48,49,50,51,52,53
+            39, 41, 42, 43, 44,
+            45, 46, 47, 48, 49, 50, 51, 52, 53
     };
     private static final int[] statusSlot = new int[]{4};
     private static final int[] modifierSlot = new int[]{13};
     private static final int[] modLevelSlot = new int[]{
-            27,28,29,30,31,32,33,34,35,
+            27, 28, 29, 30, 31, 32, 33, 34, 35,
             36
     };
     private static final int[] modLevelSwitcher = new int[]{
-            37,38
+            37, 38
     };
-    private static final int[] confirmButton = new int[] {40};
+    private static final int[] confirmButton = new int[]{40};
+    private static Player p;//player placed block
+
+    public ModifierUpgradeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe);
+        constructMenu(properties.getReplacedProperty("ModifierUpgradeTable_Name"));
+        addItemHandler(onPlace());
+        addItemHandler(onBreak());
+    }
+
     public static int[] getInputSlots() {
         return modifierSlot;
     }
@@ -74,11 +80,28 @@ public class ModifierUpgradeTable extends SlimefunItem {
     public static int getInputSlot() {
         return modifierSlot[0];
     }
-    public ModifierUpgradeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe);
-        constructMenu(properties.getReplacedProperty("ModifierUpgradeTable_Name"));
-        addItemHandler(onPlace());
-        addItemHandler(onBreak());
+
+    public static int getMODEndoMultiplierFromRarity(ItemStack MOD) {
+        Optional<ModifierInstance> optional2 = DataTypeMethods.getOptionalCustom(MOD.getItemMeta(), MODIFIER_ITEM, PersistentSFEModifierType.TYPE);
+        if (!optional2.isPresent()) {
+            return -1;
+        } else return getMODEndoMultiplierFromRarity(
+                optional2.get().getModifierType().split("_")[2].toLowerCase()
+        );
+    }
+
+    public static int getMODEndoMultiplierFromRarity(String MODName) {
+        MODName = MODName.toLowerCase();
+        return switch (modifierRarityType.get(MODName)) {
+            case "common" -> 10;
+            case "uncommon" -> 20;
+            case "rare" -> 30;
+            case "legendary" -> 40;
+            default -> {
+                logger.log(Level.WARNING, "No rarity" + modifierRarityType.get(MODName) + "for" + MODName);
+                yield -1;
+            }
+        };
     }
 
     private BlockPlaceHandler onPlace() {
@@ -121,30 +144,32 @@ public class ModifierUpgradeTable extends SlimefunItem {
                 menu.addPlayerInventoryClickHandler(new MenuClickHandler() {
                     @Override
                     public boolean onClick(Player player, int i, ItemStack itemStack, ClickAction clickAction) {
-                        if (clickAction.isShiftClicked()){return false;}
+                        if (clickAction.isShiftClicked()) {
+                            return false;
+                        }
                         return true;
                     }
                 });
                 menu.addMenuClickHandler(getInputSlot(), new AdvancedMenuClickHandler() {
                     @Override
                     public boolean onClick(InventoryClickEvent inventoryClickEvent, Player player, int i, ItemStack itemStack, ClickAction clickAction) {
-                        if (!inventoryClickEvent.isLeftClick()){return false;}
+                        if (!inventoryClickEvent.isLeftClick()) {
+                            return false;
+                        }
                         ItemStack cursorItem = inventoryClickEvent.getCursor();
-                        if (menu.getItemInSlot(i) != null && menu.getItemInSlot(i).getType() != Material.AIR){
+                        if (menu.getItemInSlot(i) != null && menu.getItemInSlot(i).getType() != Material.AIR) {
                             ModifierTable.DropItem(player, menu.getItemInSlot(i));
                             menu.replaceExistingItem(i, null);
                         }
-                        if (cursorItem != null && cursorItem.getType() != Material.AIR){
-                            if (cursorItem.getAmount() != 1){
+                        if (cursorItem != null && cursorItem.getType() != Material.AIR) {
+                            if (cursorItem.getAmount() != 1) {
                                 updateMenu(menu, null);
                                 return false;
-                            }
-                            else {
+                            } else {
                                 updateMenu(menu, cursorItem);
                                 return true;
                             }
-                        }
-                        else {
+                        } else {
                             updateMenu(menu, null);
                             return false;
                         }
@@ -198,37 +223,17 @@ public class ModifierUpgradeTable extends SlimefunItem {
         ModifierTable.borders(preset, modLevelSwitcher[1], Material.GRAY_CONCRETE, ChatColor.WHITE + properties.getReplacedProperty("ModifierUpgradeTable_Switcher_Level_Up"));
 
     }
-    public static int getMODEndoMultiplierFromRarity(ItemStack MOD){
-        Optional<ModifierInstance> optional2 = DataTypeMethods.getOptionalCustom(MOD.getItemMeta(), MODIFIER_ITEM, PersistentSFEModifierType.TYPE);
-        if (!optional2.isPresent()){return -1;}
-        else return getMODEndoMultiplierFromRarity(
-                optional2.get().getModifierType().split("_")[2].toLowerCase()
-        );
-    }
 
-    public static int getMODEndoMultiplierFromRarity(String MODName){
-        MODName = MODName.toLowerCase();
-        return switch (modifierRarityType.get(MODName)){
-            case "common" -> 10;
-            case  "uncommon" -> 20;
-            case "rare" ->30;
-            case "legendary" ->40;
-            default -> {
-                logger.log(Level.WARNING, "No rarity" + modifierRarityType.get(MODName) + "for" + MODName);
-                yield -1;
-            }
-        };
-    }
-
-    private void updateMenu(BlockMenu menu, ItemStack MOD){
+    private void updateMenu(BlockMenu menu, ItemStack MOD) {
         updateMenu(menu, MOD, true);
     }
 
-    private void updateMenu(BlockMenu menu, ItemStack MOD, boolean updateLevelSlot){
-        if (MOD != null && MOD.getType() != Material.AIR){
+    private void updateMenu(BlockMenu menu, ItemStack MOD, boolean updateLevelSlot) {
+        if (MOD != null && MOD.getType() != Material.AIR) {
             Optional<ModifierInstance> optional2 = DataTypeMethods.getOptionalCustom(MOD.getItemMeta(), MODIFIER_ITEM, PersistentSFEModifierType.TYPE);
-            if (!optional2.isPresent()){constructMenu(menu);}
-            else {
+            if (!optional2.isPresent()) {
+                constructMenu(menu);
+            } else {
                 ModifierInstance modifierInstance = optional2.get();
                 String[] modInfo = modifierInstance.getModifierType().split("_");
                 final int[] modLevel = {modifierInstance.getLevel()};
@@ -236,7 +241,7 @@ public class ModifierUpgradeTable extends SlimefunItem {
                 final int[] addLevel = {0};
                 String modName = modInfo[2];
 
-                if (updateLevelSlot){
+                if (updateLevelSlot) {
                     for (int i = 0; i < modLevel[0]; i++) {
                         menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.CYAN_CONCRETE, " "));
                         menu.addMenuClickHandler(modLevelSlot[i], (player, i1, itemStack, clickAction) -> false);
@@ -245,8 +250,7 @@ public class ModifierUpgradeTable extends SlimefunItem {
                         menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.BLACK_CONCRETE, " "));
                         menu.addMenuClickHandler(modLevelSlot[i], (player, i1, itemStack, clickAction) -> false);
                     }
-                }
-                else {
+                } else {
                     for (int j : modLevelSlot) {
                         if (menu.getItemInSlot(j) != null
                                 && menu.getItemInSlot(j).getType().equals(Material.BLUE_CONCRETE)) {
@@ -257,26 +261,27 @@ public class ModifierUpgradeTable extends SlimefunItem {
 
                 menu.replaceExistingItem(confirmButton[0], new CustomItemStack(Material.WHITE_CONCRETE, ChatColor.WHITE + properties.getReplacedProperty("ModifierUpgradeTable_Switcher_Confirm")));
                 menu.replaceExistingItem(modLevelSwitcher[0], new CustomItemStack(Material.GRAY_CONCRETE, ChatColor.WHITE + properties.getReplacedProperty("ModifierUpgradeTable_Switcher_Level_Down")));
-                menu.replaceExistingItem(modLevelSwitcher[1], new CustomItemStack(Material.GRAY_CONCRETE,ChatColor.WHITE + properties.getReplacedProperty("ModifierUpgradeTable_Switcher_Level_Up")));
+                menu.replaceExistingItem(modLevelSwitcher[1], new CustomItemStack(Material.GRAY_CONCRETE, ChatColor.WHITE + properties.getReplacedProperty("ModifierUpgradeTable_Switcher_Level_Up")));
 
                 menu.addMenuClickHandler(modLevelSwitcher[0], new ChestMenu.MenuClickHandler() {
                     @Override
                     public boolean onClick(Player player, int i0, ItemStack itemStack, ClickAction clickAction) {
-                        if (clickAction.isShiftClicked() || clickAction.isRightClicked()){
+                        if (clickAction.isShiftClicked() || clickAction.isRightClicked()) {
                             return false;
-                        }
-                        else {
+                        } else {
                             int ADDLevel = addLevel[0];
-                            if (ADDLevel <= 0){return false;}
+                            if (ADDLevel <= 0) {
+                                return false;
+                            }
 //                            else if (ADDLevel + modLevel[0] >= modifierMaxLevel.get(modName)){return false;}
                             else {
                                 ADDLevel -= 1;
-                                for (int i = modLevel[0]; i < modLevel[0] + ADDLevel; i++){
+                                for (int i = modLevel[0]; i < modLevel[0] + ADDLevel; i++) {
 
                                     menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.BLUE_CONCRETE, " "));
                                     menu.addMenuClickHandler(modLevelSlot[i], (player14, i15, itemStack14, clickAction14) -> false);
                                 }
-                                for (int i = modLevel[0] + ADDLevel; i < modLevelSlot.length; i++){
+                                for (int i = modLevel[0] + ADDLevel; i < modLevelSlot.length; i++) {
                                     menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.BLACK_CONCRETE, " "));
                                     menu.addMenuClickHandler(modLevelSlot[i], (player13, i14, itemStack13, clickAction13) -> false);
                                 }
@@ -294,12 +299,12 @@ public class ModifierUpgradeTable extends SlimefunItem {
                         if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                             if (ADDLevel < modifierMaxLevel.get(modName) - modLevel[0]) {
                                 ADDLevel += 1;
-                                for (int i = modLevel[0]; i < (modLevel[0] + ADDLevel); i++){
+                                for (int i = modLevel[0]; i < (modLevel[0] + ADDLevel); i++) {
 //                                    logger.log(Level.WARNING, "A");
                                     menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.BLUE_CONCRETE, " "));
                                     menu.addMenuClickHandler(modLevelSlot[i], (player14, i15, itemStack14, clickAction14) -> false);
                                 }
-                                for (int i = modLevel[0] + ADDLevel; i < modLevelSlot.length; i++){
+                                for (int i = modLevel[0] + ADDLevel; i < modLevelSlot.length; i++) {
 //                                    logger.log(Level.WARNING, "B");
                                     menu.replaceExistingItem(modLevelSlot[i], new CustomItemStack(Material.BLACK_CONCRETE, " "));
                                     menu.addMenuClickHandler(modLevelSlot[i], (player13, i14, itemStack13, clickAction13) -> false);
@@ -315,10 +320,10 @@ public class ModifierUpgradeTable extends SlimefunItem {
                 menu.addMenuClickHandler(confirmButton[0], new ChestMenu.MenuClickHandler() {
                     @Override
                     public boolean onClick(Player player, int i, ItemStack itemStack, ClickAction clickAction) {
-                        if (addLevel[0] > 0){
-                            int endoCost = (2<<(modLevel[0] + addLevel[0])) - (2<<(modLevel[0]));
+                        if (addLevel[0] > 0) {
+                            int endoCost = (2 << (modLevel[0] + addLevel[0])) - (2 << (modLevel[0]));
                             endoCost *= getMODEndoMultiplierFromRarity(menu.getItemInSlot(getInputSlot()));
-                            if (endoCost > 0){
+                            if (endoCost > 0) {
                                 int endos = PersistentDataAPI.getInt(player, Keys.ENDOS_OWNED);
                                 if (endos >= endoCost) {
                                     PersistentDataAPI.setInt(player, Keys.ENDOS_OWNED, endos - endoCost);
@@ -328,10 +333,10 @@ public class ModifierUpgradeTable extends SlimefunItem {
                                     itemMeta.setLore(Arrays.asList(lore));
                                     menu.getItemInSlot(getInputSlot()).setItemMeta(itemMeta);
                                     updateMenu(menu, menu.getItemInSlot(getInputSlot()), true);
-                                }else {
+                                } else {
                                     player.sendMessage(properties.getReplacedProperty("ModifierUpgradeTable_Not_Enough_Endo"));
                                 }
-                            }else {
+                            } else {
                                 logger.log(Level.WARNING, "MOD " + modName + " has negative endo cost");
                             }
                         }
@@ -340,13 +345,13 @@ public class ModifierUpgradeTable extends SlimefunItem {
                 });
 
                 menu.replaceExistingItem(statusSlot[0], new CustomItemStack(
-                        Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN +
+                        Material.GREEN_STAINED_GLASS_PANE, ChatColor.GREEN +
                         properties.getReplacedProperty("ModifierUpgradeTable_Endo_Cost"),
-                        ChatColor.GREEN + String.valueOf(getMODEndoMultiplierFromRarity(MOD)*((2<<(modLevel[0] + addLevel[0])) - (2<<(modLevel[0]))))
+                        ChatColor.GREEN + String.valueOf(getMODEndoMultiplierFromRarity(MOD) * ((2 << (modLevel[0] + addLevel[0])) - (2 << (modLevel[0]))))
                 ));
                 menu.addMenuClickHandler(statusSlot[0], (player, i, itemStack, clickAction) -> false);
             }
-        }else {
+        } else {
             constructMenu(menu);
         }
     }

@@ -22,7 +22,7 @@ public class TweakedProperty2 extends Properties {
         String regex = "\\$\\{[^}]+}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(sval);
-        if (times <= 30){
+        if (times <= 30) {
             while (true) {
                 if (!matcher.find()) {
                     break;
@@ -34,7 +34,7 @@ public class TweakedProperty2 extends Properties {
                 matcher = pattern.matcher(sval);
 //            logger.log(Level.WARNING,sval);
             }
-        }else{
+        } else {
 //            logger.log(Level.SEVERE, "trying to avoid StackOverFlowError");
 //            logger.log(Level.SEVERE, sval);
         }
@@ -44,6 +44,7 @@ public class TweakedProperty2 extends Properties {
     public List<String> getReplacedProperties(String key, ChatColor color) {
         return getReplacedProperties(key, 0, color);
     }
+
     /**
      * replace ${XXXXXX} and %{XXXXXX}
      * Strings in %{XXXXXX} will be added to next line
@@ -55,7 +56,7 @@ public class TweakedProperty2 extends Properties {
         String regex = "\\$\\{[^}]+}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(sval);
-        if (times <= 30){
+        if (times <= 30) {
             while (true) {
                 if (!matcher.find()) {
                     break;
@@ -67,19 +68,19 @@ public class TweakedProperty2 extends Properties {
                 matcher = pattern.matcher(sval);
 //            logger.log(Level.WARNING,sval);
             }
-        }else{
+        } else {
 //            logger.log(Level.SEVERE, "trying to avoid StackOverFlowError");
 //            logger.log(Level.SEVERE, sval);
         }
         regex = "%+\\{[^}]+}";
         pattern = Pattern.compile(regex);
         matcher = pattern.matcher(sval);
-        if (!matcher.find()){
+        if (!matcher.find()) {
             svals.add(sval);
             return svals;
         }
         sval = matcher.replaceFirst("");
-        if (color != null){
+        if (color != null) {
             sval = color + sval;
         }
         svals.add(sval);

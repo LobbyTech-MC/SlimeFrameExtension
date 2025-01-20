@@ -3,8 +3,8 @@ author: acdeasdff
 description: Extension 4 SlimeFrame
 main: io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension
 website: 127.0.0.1
-depend: [Slimefun, SlimeFrame]
-softdepend: [PlaceholderAPI, ProtocolLib]
+depend: [ Slimefun, SlimeFrame ]
+softdepend: [ PlaceholderAPI, ProtocolLib ]
 version: ${project.version}
 api-version: 1.16
 permissions:

@@ -3,8 +3,7 @@ package io.github.acdeasdff.SlimeFrameExtension.Items.Instance;
 import javax.annotation.Nonnull;
 
 
-
-public class ModifierInstance{
+public class ModifierInstance {
 
     private final int level;
     private final String modifierType;

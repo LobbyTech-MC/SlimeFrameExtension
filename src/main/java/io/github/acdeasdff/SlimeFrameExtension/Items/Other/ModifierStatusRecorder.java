@@ -8,21 +8,25 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import static io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension.*;
 
 public class ModifierStatusRecorder {
-    public static Map<String,Map<String,Double>> modifierStatusMap= new HashMap<>();
-    public static Map<String,Integer> modifierMaxLevel= new HashMap<>();
-    public static Map<String,String> modifierType= new HashMap<>();
-    public static Map<String, Integer> modifierBasicSize= new HashMap<>();
-    public static Map<String, Double> modifierSizeAddPerLevel= new HashMap<>();
-    public static Map<String,String> modifierRarityType= new HashMap<>();
-    public static Map<String,String> modifierForEquipment= new HashMap<>();
-    public static Map<String,String> modifierName = new HashMap<>();
-    public static void setup(SlimeFrameExtension plugin){
+    public static Map<String, Map<String, Double>> modifierStatusMap = new HashMap<>();
+    public static Map<String, Integer> modifierMaxLevel = new HashMap<>();
+    public static Map<String, String> modifierType = new HashMap<>();
+    public static Map<String, Integer> modifierBasicSize = new HashMap<>();
+    public static Map<String, Double> modifierSizeAddPerLevel = new HashMap<>();
+    public static Map<String, String> modifierRarityType = new HashMap<>();
+    public static Map<String, String> modifierForEquipment = new HashMap<>();
+    public static Map<String, String> modifierName = new HashMap<>();
+
+    public static void setup(SlimeFrameExtension plugin) {
         modifierStatusMap = new HashMap<>();
         modifierMaxLevel = new HashMap<>();
 
@@ -144,7 +148,7 @@ public class ModifierStatusRecorder {
                     "PointStrike"
                     , 5,
                     2,
-                     7. / 5.
+                    7. / 5.
                     , List.of("criticalChance")
                     , List.of(0.25),
                     "common",
@@ -464,7 +468,7 @@ public class ModifierStatusRecorder {
                     "Rupture",
                     5,
                     2,
-                     7. / 5.,
+                    7. / 5.,
                     List.of(
                             "impactDamageMultiplier"),
                     List.of(
@@ -513,8 +517,8 @@ public class ModifierStatusRecorder {
                     List.of("criticalChance",
                             "reloadSpeed"),
                     List.of(
-                            ( 1. / 3.),
-                            ( -1. / 30.)
+                            (1. / 3.),
+                            (-1. / 30.)
                     ),
                     "rare",
                     "normal",
@@ -559,8 +563,8 @@ public class ModifierStatusRecorder {
 
     }
 
-    public static void modifierStatusPutter(String name, int maxLevel, int basicSize, double sizeAddPerLevel, List<String> status, List<Double> statusValue, String rareType, String modType, String ForEquipment, SlimeFrameExtension plugin){
-        try{
+    public static void modifierStatusPutter(String name, int maxLevel, int basicSize, double sizeAddPerLevel, List<String> status, List<Double> statusValue, String rareType, String modType, String ForEquipment, SlimeFrameExtension plugin) {
+        try {
             if ((status.size() != statusValue.size()) || status.size() == 0) {
                 logger.log(Level.WARNING, name + "registerStatusFailed");
                 return;
@@ -595,10 +599,10 @@ public class ModifierStatusRecorder {
                 } else {
                     stringBuilder.append("- ");
                 }
-                if (!status.get(i).equalsIgnoreCase("punch")){
+                if (!status.get(i).equalsIgnoreCase("punch")) {
                     stringBuilder.append(statusValue.get(i) * (1) * 100);
                     stringBuilder.append("%");
-                }else {
+                } else {
                     stringBuilder.append(statusValue.get(i) * (1));
                 }
                 stringBuilder.append(" ");
@@ -670,7 +674,7 @@ public class ModifierStatusRecorder {
                     return;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.log(Level.SEVERE, name);
             logger.log(Level.SEVERE, String.valueOf(maxLevel));
             logger.log(Level.SEVERE, String.valueOf(basicSize));
@@ -684,17 +688,17 @@ public class ModifierStatusRecorder {
         }
     }
 
-    public static ChatColor getColorFromType(String rareType, String modType){
-        if (modType.equals("riven")){
+    public static ChatColor getColorFromType(String rareType, String modType) {
+        if (modType.equals("riven")) {
             return RivenMODColor;
         }
 
-        if (modType.equals("strange")){
+        if (modType.equals("strange")) {
             return StrangeMODColor;
         }
 
-        if (modType.equals("normal") || modType.equals("aura") || modType.equals("stance") || modType.equals("exilus")){
-            return switch (rareType){
+        if (modType.equals("normal") || modType.equals("aura") || modType.equals("stance") || modType.equals("exilus")) {
+            return switch (rareType) {
                 case "common" -> CommonMODColor;
                 case "uncommon" -> UncommonMODColor;
                 case "rare" -> RareMODColor;
@@ -705,17 +709,18 @@ public class ModifierStatusRecorder {
 
         return ChatColor.BLACK;
     }
-    public static Material getMODMaterialFromType(String rareType, String modType){
-        if (modType.equals("riven")){
+
+    public static Material getMODMaterialFromType(String rareType, String modType) {
+        if (modType.equals("riven")) {
             return Material.PURPLE_DYE;
         }
 
-        if (modType.equals("strange")){
+        if (modType.equals("strange")) {
             return Material.BLACK_DYE;
         }
 
-        if (modType.equals("normal") || modType.equals("aura") || modType.equals("stance") || modType.equals("exilus")){
-            return switch (rareType){
+        if (modType.equals("normal") || modType.equals("aura") || modType.equals("stance") || modType.equals("exilus")) {
+            return switch (rareType) {
                 case "common" -> Material.BROWN_DYE;
                 case "uncommon" -> Material.GRAY_DYE;
                 case "rare" -> Material.YELLOW_DYE;
@@ -728,10 +733,10 @@ public class ModifierStatusRecorder {
     }
 
 
-    public static String[] loreForMod(String modName, int level){
+    public static String[] loreForMod(String modName, int level) {
 //        logger.log(Level.WARNING, modName+level);
         int maxLevel = modifierMaxLevel.get(modName);
-        Map<String,Double> StatusMap = modifierStatusMap.get(modName);
+        Map<String, Double> StatusMap = modifierStatusMap.get(modName);
 
         List<String> status = new ArrayList<>(StatusMap.keySet());
         List<Double> statusValue = new ArrayList<>();
@@ -740,25 +745,25 @@ public class ModifierStatusRecorder {
         }
 
         String[] loreBuilder = new String[status.size() + 1];
-        loreBuilder[0] = ChatColor.GRAY +  properties.getReplacedProperty("MOD_Level") + level + "/" + maxLevel
-                + " | " + properties.getReplacedProperty("MOD_Size") + ((int) (Math.round((level)*modifierSizeAddPerLevel.get(modName))) + modifierBasicSize.get(modName));
-        for (int i=0;i<status.size();i++){
+        loreBuilder[0] = ChatColor.GRAY + properties.getReplacedProperty("MOD_Level") + level + "/" + maxLevel
+                + " | " + properties.getReplacedProperty("MOD_Size") + ((int) (Math.round((level) * modifierSizeAddPerLevel.get(modName))) + modifierBasicSize.get(modName));
+        for (int i = 0; i < status.size(); i++) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(ChatColor.GRAY);
-            if (statusValue.get(i) > 0){
+            if (statusValue.get(i) > 0) {
                 stringBuilder.append("+ ");
-            }else {
+            } else {
                 stringBuilder.append("- ");
             }
-            if (!status.get(i).equalsIgnoreCase("punch")){
+            if (!status.get(i).equalsIgnoreCase("punch")) {
                 stringBuilder.append(statusValue.get(i) * (level + 1) * 100);
                 stringBuilder.append("%");
-            }else {
+            } else {
                 stringBuilder.append(statusValue.get(i) * (level + 1));
             }
             stringBuilder.append(" ");
             stringBuilder.append(properties.getReplacedProperty("MOD_Value_" + status.get(i)));
-            loreBuilder[i+1] = stringBuilder.toString();
+            loreBuilder[i + 1] = stringBuilder.toString();
         }
         return loreBuilder;
     }

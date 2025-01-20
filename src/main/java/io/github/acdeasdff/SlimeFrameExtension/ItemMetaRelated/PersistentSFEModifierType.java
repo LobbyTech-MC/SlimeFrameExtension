@@ -2,17 +2,13 @@ package io.github.acdeasdff.SlimeFrameExtension.ItemMetaRelated;
 
 
 import de.jeff_media.morepersistentdatatypes.DataType;
-import io.github.acdeasdff.SlimeFrameExtension.Items.Instance.EquipmentInstance;
 import io.github.acdeasdff.SlimeFrameExtension.Items.Instance.ModifierInstance;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
-import javax.xml.crypto.Data;
 
 public class PersistentSFEModifierType implements PersistentDataType<PersistentDataContainer, ModifierInstance> {
 

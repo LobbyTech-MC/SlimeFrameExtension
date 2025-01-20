@@ -1,34 +1,15 @@
 package io.github.acdeasdff.SlimeFrameExtension.Items.Instance;
 
 import io.github.acdeasdff.SlimeFrameExtension.Items.Abstracts.AbstractRangedWeapon;
-import org.bukkit.World;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 
+public class EquipmentInstance {
 
-public class EquipmentInstance{
-
-//    double[] standardMODAdder = new double[]{
+    //    double[] standardMODAdder = new double[]{
 //            0,//DamageMultiplier
 //            0,0,0,//multipliers for slash, impact, puncture
 //            0,0,0,0,//multipliers for heat, cold, toxin, electricity
@@ -65,9 +46,9 @@ public class EquipmentInstance{
         this.ModifierMetas = ModifierMetas;
         this.itemType = itemType;
         this.isFormaed = isFormaed;
-        for (int i=0; i<Modifiers.length;i++){
+        for (int i = 0; i < Modifiers.length; i++) {
             ItemStack modifier = Modifiers[i];
-            if (modifier != null){
+            if (modifier != null) {
                 Modifiers[i].setItemMeta(ModifierMetas[i]);
             }
         }

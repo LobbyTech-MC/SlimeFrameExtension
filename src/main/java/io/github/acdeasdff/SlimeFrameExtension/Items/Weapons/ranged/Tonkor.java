@@ -14,7 +14,14 @@ import static io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension.proper
 import static me.voper.slimeframe.utils.Colors.GOLD_2;
 
 public class Tonkor extends AbstractRangedWeapon {
-    public Tonkor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe){
+    public static final SlimefunItemStack TONKOR = new SlimefunItemStack(
+            "SFE_TONKOR",
+            Material.IRON_HOE,
+            GOLD_2 + properties.getReplacedProperty("Weapon_Tonkor"),
+            ChatColor.GRAY + properties.getReplacedProperty("Weapon_Tonkor_Lore")
+    );
+
+    public Tonkor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe,
                 new double[]{
                         0, //pure
@@ -39,11 +46,4 @@ public class Tonkor extends AbstractRangedWeapon {
                 , false
         );
     }
-
-    public static final SlimefunItemStack TONKOR = new SlimefunItemStack(
-            "SFE_TONKOR",
-            Material.IRON_HOE,
-            GOLD_2 + properties.getReplacedProperty("Weapon_Tonkor"),
-            ChatColor.GRAY + properties.getReplacedProperty("Weapon_Tonkor_Lore")
-    );
 }

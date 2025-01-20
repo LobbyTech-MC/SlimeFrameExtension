@@ -33,20 +33,18 @@ public class SlimeFrameExtension extends AbstractAddon {
     public static ChatColor PrimedMODColor = ChatColor.WHITE;
     public static ChatColor RivenMODColor = ChatColor.LIGHT_PURPLE;
     public static ChatColor StrangeMODColor = ChatColor.DARK_GRAY;
-
-    private CommandManager commandsManager;
     public static SlimeFrameExtension instance;
     public static Logger logger;
-    private static String language;
     public static TweakedProperty2 properties;
-    private SettingsManager settingsManager;
     public static BulletListener bulletListener = new BulletListener();
     public static PlayerKillEntityListener playerKillEntityListener = new PlayerKillEntityListener();
     public static SlimeFrameExtension plugin;
-
     public static boolean placeholderAPIEnabled = false;
     public static boolean ProtocolLibEnabled = false;
     public static ProtocolLibSupport protocolLibSupport;
+    private static String language;
+    private CommandManager commandsManager;
+    private SettingsManager settingsManager;
 
     public SlimeFrameExtension() {
         super("acdeasdff", "SlimeFrameExtension", "master", "auto-update");
@@ -55,6 +53,10 @@ public class SlimeFrameExtension extends AbstractAddon {
     public SlimeFrameExtension(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, String githubUserName, String githubRepo, String autoUpdateBranch, String autoUpdateKey) {
         super(loader, description, dataFolder, file,
                 "acdeasdff", "SlimeFrameExtension", "master", "auto-update");
+    }
+
+    public static SettingsManager getSettingsManager() {
+        return instance.settingsManager;
     }
 
     @Override
@@ -79,11 +81,9 @@ public class SlimeFrameExtension extends AbstractAddon {
 
         placeholderAPIEnabled = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
         ProtocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
-        if (ProtocolLibEnabled){
+        if (ProtocolLibEnabled) {
             protocolLibSupport = new ProtocolLibSupport();
         }
-
-
 
         new Metrics(this, 19233);
         Group.setup(this);
@@ -105,11 +105,6 @@ public class SlimeFrameExtension extends AbstractAddon {
     protected void disable() {
 
     }
-
-    public static SettingsManager getSettingsManager() {
-        return instance.settingsManager;
-    }
-
 
 
 }
