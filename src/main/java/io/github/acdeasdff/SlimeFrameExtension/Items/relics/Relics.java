@@ -1,10 +1,18 @@
 package io.github.acdeasdff.SlimeFrameExtension.Items.relics;
 
+import io.github.acdeasdff.SlimeFrameExtension.Groups.Group;
 import io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import me.voper.slimeframe.implementation.items.relics.Relic;
 import me.voper.slimeframe.implementation.items.relics.RelicItemStack;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +50,46 @@ public class Relics {
             }
             Relic.create(relicItemStack).register(plugin);
         }
+
+        for (RelicItemStack relicItemStack : relics) {
+            List<SlimefunItemStack> drops = new ArrayList<>();
+            for (SlimefunItemStack sfis : relicItemStack.getCommonDrops()) {
+                drops.add(sfis);
+            }
+
+            for (SlimefunItemStack sfis : relicItemStack.getUncommonDrops()) {
+                drops.add(sfis);
+            }
+
+            drops.add(relicItemStack.getRareDrop());
+
+            RecipeType recipeType = new RecipeType(new NamespacedKey(SlimeFrameExtension.instance(), "relic_recipe_" + relicItemStack.getItemId().toLowerCase()), relicItemStack);
+            for (SlimefunItemStack sfis : drops) {
+                if (SlimefunItem.getByItem(sfis) == null) {
+                    // item not registered yet, register it
+                    new SlimefunItem(Group.WEAPONS, sfis, recipeType, new ItemStack[] {
+                            null, null, null,
+                            null, getBukkit(relicItemStack), null,
+                            null, null, null
+                    }).register(SlimeFrameExtension.instance());
+                }
+            }
+        }
+    }
+
+    @Nonnull
+    public static ItemStack getBukkit(ItemStack itemStack) {
+        if (itemStack == null) {
+            return new ItemStack(Material.AIR);
+        }
+
+        ItemStack clone = new ItemStack(itemStack.getType());
+        clone.setAmount(itemStack.getAmount());
+        ItemMeta meta = clone.getItemMeta();
+        if (meta != null) {
+            clone.setItemMeta(meta);
+        }
+
+        return clone;
     }
 }

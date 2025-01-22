@@ -561,6 +561,8 @@ public class ModifierStatusRecorder {
             );
         }
 
+        // todo
+
     }
 
     public static void modifierStatusPutter(String name, int maxLevel, int basicSize, double sizeAddPerLevel, List<String> status, List<Double> statusValue, String rareType, String modType, String ForEquipment, SlimeFrameExtension plugin) {
