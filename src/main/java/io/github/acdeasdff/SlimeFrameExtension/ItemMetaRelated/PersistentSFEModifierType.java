@@ -1,7 +1,7 @@
 package io.github.acdeasdff.SlimeFrameExtension.ItemMetaRelated;
 
 
-import de.jeff_media.morepersistentdatatypes.DataType;
+import com.jeff_media.morepersistentdatatypes.DataType;
 import io.github.acdeasdff.SlimeFrameExtension.Items.Instance.ModifierInstance;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataAdapterContext;
