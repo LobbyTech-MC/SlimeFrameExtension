@@ -43,6 +43,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>jeffMediaPublic</id>
+            <url>https://repo.jeff-media.com/public</url>
+        </repository>
     </repositories>
 
     <dependencies>
