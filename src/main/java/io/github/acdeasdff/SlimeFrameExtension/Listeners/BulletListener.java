@@ -620,7 +620,7 @@ public class BulletListener implements Listener {
         if (EffectString.equals("sfe_radiation")) {
             if (!(entity instanceof Player) && (entity instanceof Mob)) {
                 entity.addPotionEffect(new PotionEffect(
-                        PotionEffectType.INCREASE_DAMAGE,
+                        PotionEffectType.STRENGTH,
                         240,
                         entity.getMetadata(EffectString + "_level").get(0).asInt() + 1));
                 List<Entity> entities = entity.getNearbyEntities(10, 10, 10);
@@ -645,8 +645,8 @@ public class BulletListener implements Listener {
         if (entity instanceof Mob) {
 //            entity = ((Mob) entity);
 //            logger.log(Level.WARNING, "1");
-            if (((Mob) entity).hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                realDamageMultiplier /= ((((Mob) entity).getPotionEffect(PotionEffectType.DAMAGE_RESISTANCE).getAmplifier() + 1) * 0.2);
+            if (((Mob) entity).hasPotionEffect(PotionEffectType.RESISTANCE)) {
+                realDamageMultiplier /= ((((Mob) entity).getPotionEffect(PotionEffectType.RESISTANCE).getAmplifier() + 1) * 0.2);
             }
             ;
 //            logger.log(Level.WARNING, "2");
@@ -655,7 +655,7 @@ public class BulletListener implements Listener {
                 for (ItemStack itemStack : armors) {
                     armor += getArmorFromArmor(itemStack);
                     armorToughness += getToughnessFromArmor(itemStack);
-                    EPF += itemStack.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+                    EPF += itemStack.getEnchantmentLevel(Enchantment.PROTECTION);
                 }
                 EPF = Math.min(20, EPF);
 //                logger.log(Level.WARNING, "3");
@@ -917,12 +917,12 @@ public class BulletListener implements Listener {
         IMPACT(2, null, "sfe_impact", 10),
         PUNCTURE(3, PotionEffectType.WEAKNESS, "sfe_puncture", 10),
         HEAT(4, null, "sfe_heat", 10),
-        COLD(5, PotionEffectType.SLOW, "sfe_cold", 10),
+        COLD(5, PotionEffectType.SLOWNESS, "sfe_cold", 10),
         TOXIN(6, PotionEffectType.POISON, "sfe_toxin", 10),
         ELECTRICITY(7, null, "sfe_electricity", 10),
         BLAST(8, null, "sfe_blast", 10),
         GAS(9, PotionEffectType.POISON, "sfe_gas", 10),
-        RADIATION(10, PotionEffectType.CONFUSION, "sfe_radiation", 10),
+        RADIATION(10, PotionEffectType.NAUSEA, "sfe_radiation", 10),
         VIRAL(11, null, "sfe_viral", 10),
         MAGNETIC(12, PotionEffectType.ABSORPTION, "sfe_magnetic", 10),
         CORROSIVE(13, null, "sfe_corrosive", 10);
