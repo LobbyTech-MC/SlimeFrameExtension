@@ -19,7 +19,7 @@
         </includes>
       </resource>
     </resources>
-    <finalName>${project.name} v${project.version}</finalName>
+    <finalName>[sf]${project.name} v${project.version}</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -92,7 +92,7 @@
             <annotationProcessorPath>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.34</version>
+              <version>1.18.38</version>
             </annotationProcessorPath>
           </annotationProcessorPaths>
         </configuration>
@@ -109,11 +109,11 @@
       <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
     </repository>
     <repository>
-      <id>spigot-repo1</id>
+      <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>papermc1</id>
+      <id>papermc</id>
       <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
     <repository>
@@ -133,20 +133,8 @@
       <url>https://repo.jeff-media.com/public</url>
     </repository>
     <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
-    <repository>
-      <id>mcmmo-repo</id>
-      <url>https://nexus.neetgames.com/repository/maven-public</url>
-    </repository>
-    <repository>
       <id>bg-repo</id>
       <url>https://repo.bg-software.com/repository/api/</url>
-    </repository>
-    <repository>
-      <id>papermc</id>
-      <url>https://papermc.io/repo/repository/maven-public/</url>
     </repository>
     <repository>
       <id>rosewood-repo</id>
@@ -163,13 +151,13 @@
     <dependency>
       <groupId>com.github.SlimefunGuguProject</groupId>
       <artifactId>Slimefun4</artifactId>
-      <version>b39097e015</version>
+      <version>master-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.34</version>
+      <version>1.18.38</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
