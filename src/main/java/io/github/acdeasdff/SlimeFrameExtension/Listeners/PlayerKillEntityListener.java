@@ -10,16 +10,20 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.Random;
 
 import static io.github.mooy1.infinitylib.core.AbstractAddon.instance;
 
+@EnableAsync
 public class PlayerKillEntityListener implements Listener {
 
     Random random = new Random();
 
     @EventHandler
+    @Async
     public void EndoListener(EntityDamageByEntityEvent e) {
         // 1. Ensure the target is a LivingEntity (mobs/animals) but NOT a Player
         // 2. Ensure the target is NOT an ItemFrame or other non-living entities

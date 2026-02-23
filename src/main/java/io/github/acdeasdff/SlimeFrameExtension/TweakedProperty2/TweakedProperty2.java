@@ -1,6 +1,8 @@
 package io.github.acdeasdff.SlimeFrameExtension.TweakedProperty2;
 
 import org.bukkit.ChatColor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +10,10 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@EnableAsync
 public class TweakedProperty2 extends Properties {
 
+	@Async
     public String getReplacedProperty(String key) {
         return getReplacedProperty(key, 0);
     }
@@ -17,6 +21,7 @@ public class TweakedProperty2 extends Properties {
     /**
      * replace ${XXXXXX}
      **/
+    @Async
     public String getReplacedProperty(String key, int times) {
         String sval = getProperty(key);
         String regex = "\\$\\{[^}]+}";
@@ -41,6 +46,7 @@ public class TweakedProperty2 extends Properties {
         return sval;
     }
 
+    @Async
     public List<String> getReplacedProperties(String key, ChatColor color) {
         return getReplacedProperties(key, 0, color);
     }
@@ -50,6 +56,7 @@ public class TweakedProperty2 extends Properties {
      * Strings in %{XXXXXX} will be added to next line
      * (only the first works)
      **/
+    @Async
     public List<String> getReplacedProperties(String key, int times, ChatColor color) {
         List<String> svals = new ArrayList<>();
         String sval = getProperty(key);

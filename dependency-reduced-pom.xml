@@ -229,12 +229,13 @@
       <artifactId>SlimeFrame</artifactId>
       <version>UNOFFICIAL</version>
       <scope>system</scope>
-      <systemPath>C:\Users\11877\Documents\GitHub\SlimeFrameExtension\lib\SlimeFrame.jar</systemPath>
+      <systemPath>${SlimeFrame-systemPath}</systemPath>
     </dependency>
   </dependencies>
   <properties>
     <maven.compiler.target>21</maven.compiler.target>
     <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <SlimeFrame-systemPath>C:\Users\11877\Documents\GitHub\SlimeFrameExtension\lib\SlimeFrame.jar</SlimeFrame-systemPath>
   </properties>
 </project>

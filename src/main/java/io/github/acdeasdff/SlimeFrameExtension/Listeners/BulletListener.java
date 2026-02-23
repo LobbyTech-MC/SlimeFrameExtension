@@ -30,6 +30,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,15 +40,18 @@ import java.util.Random;
 
 import static io.github.acdeasdff.SlimeFrameExtension.SlimeFrameExtension.*;
 
+@EnableAsync
 public class BulletListener implements Listener {
 
 
     public static Random random = new Random();
 
+    @Async
     public static List<Double> punchLocation(Location location, double punchThrough) {
         return punchLocation(location.getX(), location.getY(), location.getZ(), punchThrough);
     }
 
+    @Async
     public static List<Double> punchLocation(double x, double y, double z, double punchThrough) {
         if (punchThrough > 0) {
             double fastInvSqrt = invSqrt((float) (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2)));
@@ -60,6 +65,7 @@ public class BulletListener implements Listener {
         }
     }
 
+    @Async
     public static float invSqrt(float x) {
         float xHalf = 0.5f * x;
         int i = Float.floatToIntBits(x);
@@ -69,6 +75,7 @@ public class BulletListener implements Listener {
         return x;
     }
 
+    @Async
     public static double[] CalculateDamage(double[] basicDamages, double[] ExtraCalculates, EntityDamageByEntityEvent e, double[] MODAdder) {
         if (e.getDamager() instanceof Projectile) {
             return CalculateDamage(basicDamages, ExtraCalculates, e.getDamager(), ((Projectile) e.getDamager()).getShooter(), e.getEntity(), MODAdder);
@@ -77,10 +84,12 @@ public class BulletListener implements Listener {
         }
     }
 
+    @Async
     public static double[] CalculateDamage(double[] basicDamages, double[] ExtraCalculates, Object projectile, Object shooter, Entity targetEntity, double[] MODAdder) {
         return CalculateDamage(basicDamages, ExtraCalculates, shooter, targetEntity, MODAdder);
     }
 
+    @Async
     public static double[] CalculateDamage(double[] basicDamages, double[] ExtraCalculates, Object shooter, Entity targetEntity, double[] MODAdder) {
         double mobTypeDamageMultiplier = 1;
         double Damage = 0;
@@ -636,6 +645,7 @@ public class BulletListener implements Listener {
         }
     }
 
+    @Async
     public static double realDamageMultiplier(Entity entity, double Damage) {
         double realDamageMultiplier = 1;
         int armor = 0;
@@ -668,8 +678,7 @@ public class BulletListener implements Listener {
         return realDamageMultiplier;
     }
 
-    ;
-
+    @Async
     public static int getArmorFromArmor(ItemStack armor) {
         if (armor == null) {
             return 0;
@@ -691,6 +700,7 @@ public class BulletListener implements Listener {
         }
     }
 
+    @Async
     public static int getToughnessFromArmor(ItemStack armor) {
         if (armor == null) {
             return 0;
@@ -704,6 +714,7 @@ public class BulletListener implements Listener {
         }
     }
 
+    @Async
     public static void sendActionBar(Player player, String message) {
         if (placeholderAPIEnabled) {
             try {
@@ -720,6 +731,7 @@ public class BulletListener implements Listener {
     }
 
     @EventHandler
+    @Async
     public void onEntityBulletHit(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Projectile)) return;
 
@@ -796,6 +808,7 @@ public class BulletListener implements Listener {
     }
 
     @EventHandler
+    @Async
     public void onBulletHit(ProjectileHitEvent e) {
         boolean punch = true;
         if (e.getEntity().hasMetadata("sfe_isGunBullet")) {
