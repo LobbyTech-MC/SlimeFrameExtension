@@ -9,6 +9,7 @@
     <version>2</version>
 
     <properties>
+        <SlimeFrame-systemPath>C:\Users\11877\Documents\GitHub\SlimeFrameExtension\lib\SlimeFrame.jar</SlimeFrame-systemPath>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -165,7 +166,7 @@
             <artifactId>SlimeFrame</artifactId>
             <version>UNOFFICIAL</version>
             <scope>system</scope>
-            <systemPath>C:\Users\11877\Documents\GitHub\SlimeFrameExtension\lib\SlimeFrame.jar</systemPath>
+            <systemPath>${SlimeFrame-systemPath}</systemPath>
         </dependency>
 
     </dependencies>

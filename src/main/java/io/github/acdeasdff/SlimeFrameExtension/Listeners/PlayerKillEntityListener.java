@@ -21,50 +21,43 @@ public class PlayerKillEntityListener implements Listener {
 
     @EventHandler
     public void EndoListener(EntityDamageByEntityEvent e) {
+        // 1. Ensure the target is a LivingEntity (mobs/animals) but NOT a Player
+        // 2. Ensure the target is NOT an ItemFrame or other non-living entities
+        if (!(e.getEntity() instanceof LivingEntity victim) || victim instanceof Player) {
+            return; 
+        }
 
-        //givingEndo
-        if (!(e.getEntity() instanceof Player) || (e.getEntity() instanceof LivingEntity)) {//not attacking player
-            if (e.getDamager() instanceof Player) {//player attacking
-                if (random.nextInt(50) <= 1) {//drop chance:4%
-                    int endos = PersistentDataAPI.getInt(e.getDamager(), Keys.ENDOS_OWNED, 0);
+        Player attacker = null;
 
-                    if (((LivingEntity) e.getEntity())
-                            .getAttribute(Attribute.GENERIC_MAX_HEALTH)//has health
-                            != null
-                    ) {
-                        if (((LivingEntity) e.getEntity()).getHealth() <= e.getDamage()) {//dead
-                            endos += ((LivingEntity) e.getEntity())
-                                    .getAttribute(Attribute.GENERIC_MAX_HEALTH)
-                                    .getValue()
-                                    + random.nextInt(10);
-                            PersistentDataAPI.setInt(e.getDamager(), Keys.ENDOS_OWNED, endos);
-                        }
+        // Determine if the damager is a player or a projectile shot by a player
+        if (e.getDamager() instanceof Player p) {
+            attacker = p;
+        } else if (e.getDamager() instanceof Projectile projectile && projectile.getShooter() instanceof Player p) {
+            attacker = p;
+        }
 
-                    }
-                }
-            } else if (e.getDamager() instanceof Projectile) {//ranged attack
-                if (((Projectile) e.getDamager()).getShooter() instanceof Player) {
-                    //do the same thing
-                    if (random.nextInt(50) <= 1) {//drop chance:4%
-                        int endos = PersistentDataAPI.getInt(e.getDamager(), Keys.ENDOS_OWNED, 0);
-
-                        if (((LivingEntity) e.getEntity())
-                                .getAttribute(Attribute.GENERIC_MAX_HEALTH)//has health
-                                != null
-                        ) {
-                            if (((LivingEntity) e.getEntity()).getHealth() <= e.getDamage()) {//dead
-                                endos += Math.min(((LivingEntity) e.getEntity())
-                                        .getAttribute(Attribute.GENERIC_MAX_HEALTH)
-                                        .getValue(), 600)
-                                        + random.nextInt(10);
-                                PersistentDataAPI.setInt(e.getDamager(), Keys.ENDOS_OWNED, endos);
-                            }
-
-                        }
+        // If we found a player attacker, process the Endo logic
+        if (attacker != null) {
+            if (random.nextInt(50) <= 1) { // 4% chance (approx 1 in 50 is 2%, but logic says <= 1)
+                
+                // Check if the hit will kill the entity
+                if (victim.getHealth() <= e.getDamage()) {
+                    var maxHealthAttr = victim.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                    
+                    if (maxHealthAttr != null) {
+                        int currentEndos = PersistentDataAPI.getInt(attacker, Keys.ENDOS_OWNED, 0);
+                        
+                        double healthValue = maxHealthAttr.getValue();
+                        // Apply your 600 cap logic if it's a ranged attack or keep it consistent
+                        double rewardBase = (e.getDamager() instanceof Projectile) ? Math.min(healthValue, 600) : healthValue;
+                        
+                        int gainedEndos = (int) rewardBase + random.nextInt(10);
+                        PersistentDataAPI.setInt(attacker, Keys.ENDOS_OWNED, currentEndos + gainedEndos);
                     }
                 }
             }
         }
+    
 
         long currentTime = System.currentTimeMillis();
         Entity entity1 = e.getEntity();
